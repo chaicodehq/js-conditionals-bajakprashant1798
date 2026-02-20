@@ -33,5 +33,31 @@
  * @returns {{ allowed: boolean, message: string }}
  */
 export function canBorrowBook(memberAge, hasValidCard, overdueBooks) {
-  // Your code here
+  if (typeof memberAge !== "number" || memberAge < 0) {
+    console.log("Invalid age input. Age must be a non-negative number.");
+    return { allowed: false, message: "Invalid age input" };
+  }
+  if (memberAge < 6) {
+    console.log("Too young - must be at least 6 years old");
+    return { allowed: false, message: "Too young - must be at least 6 years old" };
+  }
+  if (!hasValidCard) {
+    console.log("Invalid library card - please renew at the front desk");
+    return { allowed: false, message: "Invalid library card - please renew at the front desk" };
+  }
+  if (typeof overdueBooks !== "number" || overdueBooks < 0) {
+    console.log("Invalid number of overdue books. Must be a non-negative number.");
+    return { allowed: false, message: "Invalid number of overdue books. Must be a non-negative number." };
+  }
+  if (overdueBooks > 0) {
+    console.log(`Please return your ${overdueBooks} overdue book(s) first`);
+    return { allowed: false, message: `Please return your ${overdueBooks} overdue book(s) first` };
+  }
+  console.log("You may borrow up to 3 books");
+  return { allowed: true, message: "You may borrow up to 3 books" };
 }
+
+canBorrowBook(5, true, 0); // { allowed: false, message: "Too young - must be at least 6 years old" }
+canBorrowBook(10, false, 0); // { allowed: false, message: "Invalid library card - please renew at the front desk" }
+canBorrowBook(20, true, 2); // { allowed: false, message: "Please return your 2 overdue book(s) first" }
+canBorrowBook(30, true, 0); // { allowed: true, message: "You may borrow up to 3 books" } 

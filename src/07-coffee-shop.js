@@ -31,5 +31,69 @@
  * @returns {number} Total price or -1 for invalid input
  */
 export function calculateCoffeePrice(size, type, extras = {}) {
-  // Your code here
+  if (typeof size !== "string" || typeof type !== "string" || typeof extras !== "object") {
+    console.log("Invalid input types. Size and type must be strings, extras must be an object.")
+    return -1;
+  }
+
+  const sizePrices = {
+    small: 3.00,
+    medium: 4.00,
+    large: 5.00
+  };
+
+  const typePrices = {
+    regular: 0.00,
+    latte: 1.00,
+    cappuccino: 1.50,
+    mocha: 2.00
+  };
+  
+  if (sizePrices[size] === undefined  || typePrices[type] === undefined) {
+    console.log("test: ", sizePrices[size], typePrices[type]);
+    
+    console.log("Invalid size or type input.")
+    return -1;
+  }
+
+  // if (sizePrices[size] != "small" || sizePrices[size] != "medium" || sizePrices[size] != "large") {
+  //   console.log("Invalid size input.")
+  //   return -1;
+  // }
+
+  // if (typePrices[type] != "regular" || typePrices[type] != "latte" || typePrices[type] != "cappuccino" || typePrices[type] != "mocha") {
+  //   console.log("Invalid type input.")
+  //   return -1;
+  // }
+
+  let basePrice = sizePrices[size];
+  let typePrice = typePrices[type];
+  let extrasPrice = 0;
+
+  if (typeof extras.whippedCream === "boolean") {
+    if (extras.whippedCream) {
+      extrasPrice += 0.50;
+    }
+  } else if (extras.whippedCream !== undefined) {
+    console.log("Invalid whippedCream input. whippedCream must be a boolean.");
+    return -1;
+  }
+
+  if (typeof extras.extraShot === "boolean") {
+    if (extras.extraShot) {
+      extrasPrice += 0.75;
+    }
+  } else if (extras.extraShot !== undefined) {
+    console.log("Invalid extraShot input. extraShot must be a boolean.");
+    return -1;
+  }
+
+  console.log("basePrice:", basePrice, "typePrice:", typePrice, "extrasPrice:", extrasPrice);
+  
+  let finalPrice = basePrice + typePrice + extrasPrice;
+  console.log("finalPrice before rounding:", finalPrice);
+
+  return Number(finalPrice.toFixed(2));
 }
+
+calculateCoffeePrice("small", "latte", { whippedCream: true, extraShot: false });

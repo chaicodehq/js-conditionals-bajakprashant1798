@@ -26,5 +26,32 @@
  * @returns {number} Total tax amount owed
  */
 export function calculateTax(income) {
-  // Your code here
+  if (income <= 0) {
+    console.log("Invalid Income");
+    return 0;
+  }
+
+  let tax = 0;
+  if (income <= 10000) {
+    tax = 0;
+    return tax;
+  }
+
+  if (income <= 30000) {
+    tax = 0.1 * (income - 10000);
+    return tax;
+  }
+
+  if (income <= 70000) {
+    tax = 0.1 * (30000 - 10000) + 0.2 * (income - 30000);
+    return tax;
+  }
+
+  tax = 0.1 * (30000 - 10000) + 0.2 * (70000 - 30000) + 0.3 * (income - 70000);
+  return tax;
 }
+
+console.log(calculateTax(8000));
+console.log(calculateTax(20000));
+console.log(calculateTax(50000));
+console.log(calculateTax(100000));

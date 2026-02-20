@@ -30,5 +30,36 @@
  * @returns {{ tipPercentage: number, tipAmount: number, totalAmount: number } | null}
  */
 export function calculateTip(billAmount, serviceRating) {
-  // Your code here
+  if (billAmount <= 0 || serviceRating < 1 || serviceRating > 5) {
+    return null;
+  }
+
+  // we can use isInteger too like this Number.isInteger(serviceRating)
+  if (!(typeof serviceRating === "number" && serviceRating % 1 === 0)) {
+    return null;
+  }
+
+  let tipPercentage = 0;
+  if (serviceRating === 1) {
+    tipPercentage = 5;
+  } else if (serviceRating === 2) {
+    tipPercentage = 10;
+  } else if (serviceRating === 3) {
+    tipPercentage = 15;
+  } else if (serviceRating === 4) {
+    tipPercentage = 20;
+  } else if (serviceRating === 5) {
+    tipPercentage = 25;
+  }
+
+  let tipBill;
+  let totalAmount;
+  tipBill = Number(((billAmount * tipPercentage) / 100).toFixed(2));
+  totalAmount = billAmount + tipBill;
+
+  return {
+    tipPercentage: tipPercentage,
+    tipAmount: tipBill,
+    totalAmount: totalAmount,
+  };
 }

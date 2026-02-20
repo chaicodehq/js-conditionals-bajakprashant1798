@@ -33,5 +33,47 @@
  * @returns {number} Parking fee or -1 for invalid input
  */
 export function calculateParkingFee(hours, vehicleType) {
-  // Your code here
+  vehicleType = vehicleType.toLowerCase();
+  if (hours <= 0) {
+    return -1;
+  } else if (vehicleType !== "car" && vehicleType !== "motorcycle" && vehicleType !== "bus") {
+    return -1;
+  }
+
+  const carMax = 30;
+  const motorcycleMax = 18;
+  const busMax = 60;
+  let parkingFee = 0;
+
+  if (vehicleType === "car") {
+    parkingFee = 5 + (Math.ceil(hours) - 1) * 3;
+    if (parkingFee > carMax) {
+      parkingFee = carMax;
+    }
+  } else if (vehicleType === "motorcycle") {
+    parkingFee = 3 + (Math.ceil(hours) - 1) * 2;
+    if (parkingFee > motorcycleMax) {
+      parkingFee = motorcycleMax;
+    }
+  } else if (vehicleType === "bus") {
+    parkingFee = 10 + (Math.ceil(hours) - 1) * 7;
+    if (parkingFee > busMax) {
+      parkingFee = busMax;
+    }
+  }
+
+  return parkingFee;
 }
+
+console.log(calculateParkingFee(1, "car"));
+console.log(calculateParkingFee(3, "car"));
+console.log(calculateParkingFee(0.5, "car"));
+console.log(calculateParkingFee(24, "car"));
+console.log(calculateParkingFee(1, "motorcycle"));
+console.log(calculateParkingFee(3, "motorcycle"));
+console.log(calculateParkingFee(0.5, "motorcycle"));
+console.log(calculateParkingFee(24, "motorcycle"));
+console.log(calculateParkingFee(1, "bus"));
+console.log(calculateParkingFee(3, "bus"));
+console.log(calculateParkingFee(0.5, "bus"));
+console.log(calculateParkingFee(10, "Bus"));
